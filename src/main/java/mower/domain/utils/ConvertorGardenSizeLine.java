@@ -1,8 +1,13 @@
 package mower.domain.utils;
 
 import mower.domain.beans.GardenLimits;
+import org.apache.commons.lang.StringUtils;
 
-public class ConvertorGardenSizeLine extends ConvertorLine<GardenLimits>{
+import java.io.Serializable;
+
+public class ConvertorGardenSizeLine extends ConvertorLine<GardenLimits> implements Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     public ConvertorGardenSizeLine(final String line) {
         super(line);
@@ -10,11 +15,12 @@ public class ConvertorGardenSizeLine extends ConvertorLine<GardenLimits>{
 
     @Override
     protected boolean isValidLine() {
-        return false;
+        return StringUtils.isNotBlank(line) && line.matches("^[0-9] [0-9]$");
     }
 
     @Override
     protected GardenLimits process() {
-        return null;
+        String[] position = line.split(" ");
+        return new GardenLimits(Integer.valueOf(position[0]), Integer.valueOf(position[1]));
     }
 }

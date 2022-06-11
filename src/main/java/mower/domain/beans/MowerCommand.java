@@ -17,6 +17,11 @@ public enum MowerCommand {
     }
 
     public static MowerCommand getCommandeFromCode(final String code) {
+        for (MowerCommand commande : MowerCommand.values()) {
+            if (commande.getCode().equals(code)) {
+                return commande;
+            }
+        }
         return null;
     }
 

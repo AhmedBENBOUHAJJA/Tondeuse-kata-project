@@ -1,8 +1,11 @@
 package mower.domain.beans;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class MowerMachine {
+public class MowerMachine implements Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     private final MowerPosition position;
     private final GardenLimits limite;
@@ -15,11 +18,26 @@ public class MowerMachine {
         this.commands = commands;
     }
 
-    private void processCommand(final MowerCommand cmd) {
+    private void processCommand(final MowerCommand command) {
+
+        switch(command) {
+            case Avance :
+                position.aheadIfPossible(limite);
+                break;
+            case Droite :
+                position.turnRightDirection();
+                break;
+            case Gauche :
+                position.turnLeftDirection();
+                break;
+        }
 
     }
 
     public MowerPosition process() {
-        return null;
+        for(MowerCommand commands : commands) {
+            processCommand(commands);
+        }
+        return position;
     }
 }

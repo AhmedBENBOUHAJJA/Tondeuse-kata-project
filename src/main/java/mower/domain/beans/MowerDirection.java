@@ -30,6 +30,11 @@ public enum MowerDirection {
     }
 
     public static MowerDirection getDirectionFromCode(final String code) {
+        for (MowerDirection direction : MowerDirection.values()) {
+            if (direction.getCode().equals(code)) {
+                return direction;
+            }
+        }
         return null;
     }
 

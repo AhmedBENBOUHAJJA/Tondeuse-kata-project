@@ -1,6 +1,10 @@
 package mower.domain.beans;
 
-public class MowerPosition {
+import java.io.Serializable;
+
+public class MowerPosition implements Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     private int width;
     private int length;
@@ -13,19 +17,32 @@ public class MowerPosition {
     }
 
     public void turnRightDirection() {
-
+        direction = direction.getRightDirection();
     }
 
     public void turnLeftDirection() {
-
+        direction = direction.getLeftDirection();
     }
 
     public void aheadIfPossible(final GardenLimits limit) {
-
+        switch(direction) {
+            case North :
+                if (length < limit.getY()) { length += 1; }
+                break;
+            case South :
+                if (length > 0) { length -= 1; }
+                break;
+            case East :
+                if (width < limit.getX()) { width += 1; }
+                break;
+            case West :
+                if (width > 0) { width -= 1; }
+                break;
+        }
     }
 
     public boolean isValidPosition(final GardenLimits limit) {
-        return false;
+        return width >=0 && width <= limit.getX() && length >= 0 && length <= limit.getY();
     }
 
     public int getX() {
@@ -40,7 +57,12 @@ public class MowerPosition {
         return direction;
     }
 
+    @Override
+    public String toString() {
+        return width + " " + length + " " + direction;
+    }
+
     public MowerPosition clone() {
-        return null;
+        return new MowerPosition(this.width, this.length, this.direction);
     }
 }

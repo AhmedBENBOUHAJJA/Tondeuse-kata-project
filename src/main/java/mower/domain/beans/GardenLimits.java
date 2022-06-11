@@ -1,6 +1,8 @@
 package mower.domain.beans;
 
-public class GardenLimits {
+import java.io.Serializable;
+
+public class GardenLimits implements Serializable {
 
     private final int width;
     private final int length;

@@ -11,7 +11,11 @@ public abstract class ConvertorLine<T> {
     protected abstract boolean isValidLine();
     protected abstract T process();
 
-    public T convert() {
-        return null;
+    public T convert() throws Exception {
+        if (!isValidLine()) {
+            System.out.println("Invalid file Format, please try again !");
+            throw new Exception();
+        }
+        return process();
     }
 }
