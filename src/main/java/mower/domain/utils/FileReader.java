@@ -1,5 +1,7 @@
 package mower.domain.utils;
 
+import org.apache.log4j.Logger;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.Serializable;
@@ -10,6 +12,8 @@ import java.util.Scanner;
 public class FileReader implements Serializable {
 
     private static final long serialVersionUID = 1L;
+
+    static final Logger logger = Logger.getLogger(FileReader.class);
 
         private static FileReader instance;
         private FileReader() {};
@@ -34,7 +38,7 @@ public class FileReader implements Serializable {
             }
             scanner.close();
         } catch (FileNotFoundException e) {
-            System.out.println("File is not found, please try again !");
+            logger.error("File is not found, please try again !");
             throw e;
         }
 

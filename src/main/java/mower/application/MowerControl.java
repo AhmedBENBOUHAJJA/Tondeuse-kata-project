@@ -4,9 +4,12 @@ import mower.domain.beans.GardenLimits;
 import mower.domain.beans.MowerCommand;
 import mower.domain.beans.MowerMachine;
 import mower.domain.beans.MowerPosition;
+import mower.domain.exceptions.FileFormatInvalidException;
+import mower.domain.exceptions.InitialPositionMowerInvalidException;
 import mower.domain.utils.ConvertorCommandLine;
 import mower.domain.utils.ConvertorGardenSizeLine;
 import mower.domain.utils.ConvertorInitialPositionLine;
+import org.apache.log4j.Logger;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -17,13 +20,15 @@ public class MowerControl implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    private static final Logger logger = Logger.getLogger(MowerControl.class);
+
     private final List<MowerMachine> mowers = new ArrayList<MowerMachine>();
 
-    public MowerControl(final List<String> file) throws Exception {
+    public MowerControl(final List<String> file)  throws FileFormatInvalidException, InitialPositionMowerInvalidException {
 
         if (file == null || file.size() == 0) {
-            System.out.println("File is empty !");
-            throw new Exception();
+            logger.error("File is empty !");
+            throw new FileFormatInvalidException();
         }
 
         Iterator<String> iterator = file.iterator();
@@ -36,8 +41,8 @@ public class MowerControl implements Serializable {
             MowerPosition position = new ConvertorInitialPositionLine(positionMowerLine).convert();
 
             if (!iterator.hasNext()) {
-                System.out.println("File format is invalid !");
-                throw new Exception();
+                logger.error("File format is invalid !");
+                throw new FileFormatInvalidException();
             }
 
             String mowerCommands = iterator.next();

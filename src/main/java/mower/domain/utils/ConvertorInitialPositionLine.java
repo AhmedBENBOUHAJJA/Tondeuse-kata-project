@@ -8,6 +8,8 @@ import java.io.Serializable;
 
 public class ConvertorInitialPositionLine extends ConvertorLine<MowerPosition> implements Serializable {
 
+    private static final long serialVersionUID = 1L;
+
     public ConvertorInitialPositionLine(final String line) {
         super(line);
     }
