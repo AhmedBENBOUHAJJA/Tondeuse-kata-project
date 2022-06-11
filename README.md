@@ -17,3 +17,7 @@ Java version 13
 
 85% of classes are covered with unit tests
 , 80% of lines are covered
+
+# Architecture
+
+Hexagonal architecture
